@@ -3,13 +3,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import CounselorList from '@/components/counselor/counselor-list';
 import BookingForm from '@/components/counselor/booking-form';
 import QuickAccess from '@/components/dashboard/quick-access';
+import Link from 'next/link';
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
-  const [selectedCounselor, setSelectedCounselor] = useState<string | null>(null);
   const [bookings, setBookings] = useState([]);
   const router = useRouter();
 
@@ -29,9 +30,7 @@ export default function Dashboard() {
   const fetchBookings = async (token: string) => {
     try {
       const response = await fetch('/api/bookings', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
+        headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
       setBookings(data.bookings || []);
@@ -40,66 +39,90 @@ export default function Dashboard() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    router.push('/');
-  };
-
   if (!user) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-green-50">
-      <nav className="bg-white shadow">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Mental Health Support</h1>
-          <div className="flex items-center gap-4">
-            <span className="text-gray-600">Welcome, {user.name}</span>
-            <Button onClick={handleLogout} variant="outline">
-              Logout
-            </Button>
-          </div>
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-green-50 py-8">
+      <div className="container mx-auto px-4">
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome, {user.name}</h1>
+          <p className="text-gray-600">Your mental health support hub</p>
         </div>
-      </nav>
 
-      <div className="container mx-auto px-4 py-12">
         <QuickAccess />
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <CounselorList />
-          </div>
 
-          <div className="space-y-6">
-            {selectedCounselor && (
-              <BookingForm
-                counselorId={selectedCounselor}
-                onBookingSuccess={() => fetchBookings(localStorage.getItem('token')!)}
-              />
-            )}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">💬 AI Chat Support</CardTitle>
+              <CardDescription>24/7 AI-guided coping strategies</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" asChild>
+                <Link href="/chat">Start Chat</Link>
+              </Button>
+            </CardContent>
+          </Card>
 
-            <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="text-xl font-bold mb-4">Your Bookings</h3>
-              {bookings.length > 0 ? (
-                <ul className="space-y-3">
-                  {bookings.map((booking: any) => (
-                    <li key={booking._id} className="border-l-4 border-blue-500 pl-4 py-2">
-                      <p className="font-semibold">{booking.counselorId?.userId?.name}</p>
-                      <p className="text-sm text-gray-600">
-                        {new Date(booking.appointmentDate).toLocaleDateString()} at {booking.appointmentTime}
-                      </p>
-                      <p className="text-sm capitalize">
-                        <span className="font-medium">Status:</span> {booking.status}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-600">No bookings yet. Select a counselor to book your first session.</p>
-              )}
-            </div>
-          </div>
+          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">📅 Book Counselor</CardTitle>
+              <CardDescription>Schedule with professionals</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" asChild>
+                <Link href="/bookings">Book Now</Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">📚 Resources</CardTitle>
+              <CardDescription>Wellness guides & content</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" asChild>
+                <Link href="/resources">Explore</Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">👥 Peer Forum</CardTitle>
+              <CardDescription>Community support</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" asChild>
+                <Link href="/forum">Join Forum</Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">📈 Analytics</CardTitle>
+              <CardDescription>Track your progress</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" asChild>
+                <Link href="/analytics">View Stats</Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">🔔 Notifications</CardTitle>
+              <CardDescription>Your updates</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button className="w-full" variant="outline">View All</Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </main>

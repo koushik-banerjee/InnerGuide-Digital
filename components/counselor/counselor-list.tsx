@@ -19,10 +19,14 @@ interface Counselor {
   availableDays: string[];
 }
 
-export default function CounselorList() {
+interface CounselorListProps {
+  onSelectCounselor?: (id: string) => void;
+  selectedId?: string | null;
+}
+
+export default function CounselorList({ onSelectCounselor, selectedId }: CounselorListProps) {
   const [counselors, setCounselors] = useState<Counselor[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCounselor, setSelectedCounselor] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCounselors = async () => {
@@ -88,11 +92,14 @@ export default function CounselorList() {
               </div>
 
               <Button
-                onClick={() => setSelectedCounselor(counselor._id)}
+                onClick={() => {
+                  setSelectedCounselor(counselor._id);
+                  onSelectCounselor?.(counselor._id);
+                }}
                 className="w-full"
-                variant={selectedCounselor === counselor._id ? 'default' : 'outline'}
+                variant={selectedId !== undefined ? (selectedId === counselor._id ? 'default' : 'outline') : (selectedCounselor === counselor._id ? 'default' : 'outline')}
               >
-                {selectedCounselor === counselor._id ? 'Selected' : 'Book Session'}
+                {selectedId !== undefined ? (selectedId === counselor._id ? 'Selected' : 'Book Session') : (selectedCounselor === counselor._id ? 'Selected' : 'Book Session')}
               </Button>
             </CardContent>
           </Card>
