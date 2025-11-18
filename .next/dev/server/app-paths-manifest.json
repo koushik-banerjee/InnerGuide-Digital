@@ -1,0 +1,7 @@
+{
+  "/api/bookings/route": "app/api/bookings/route.js",
+  "/api/forum/threads/route": "app/api/forum/threads/route.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/forum/page": "app/forum/page.js",
+  "/page": "app/page.js"
+}
