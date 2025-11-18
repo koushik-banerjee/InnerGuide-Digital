@@ -9,15 +9,121 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
+    const userData = localStorage.getItem('user');
+    
+    if (token && userData) {
       setIsLoggedIn(true);
-      router.push('/dashboard');
+      setUser(JSON.parse(userData));
     }
-  }, [router]);
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-slate-50 to-blue-50 flex items-center justify-center">
+        <div className="text-gray-600">Loading...</div>
+      </main>
+    );
+  }
+
+  if (isLoggedIn && user) {
+    return (
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 via-slate-50 to-blue-50">
+        <nav className="border-b border-blue-100 bg-white/80 backdrop-blur-sm sticky top-0 z-40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <Link href="/" className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+                  M
+                </div>
+                <span className="text-xl font-semibold text-gray-900" style={{ fontFamily: 'Poppins' }}>MindCare College</span>
+              </Link>
+
+              <div className="text-gray-900">
+                Welcome, <span className="font-semibold">{user.name || user.email}</span>
+              </div>
+
+              <Button onClick={() => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                setIsLoggedIn(false);
+                router.push('/');
+              }} variant="outline">
+                Logout
+              </Button>
+            </div>
+          </div>
+        </nav>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="mb-12">
+            <h1 className="text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Poppins' }}>
+              Welcome back, {user.name || 'Student'}!
+            </h1>
+            <p className="text-xl text-gray-600 mb-8">
+              Access your mental health support tools and resources.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer" onClick={() => router.push('/chat')}>
+              <CardHeader>
+                <div className="text-4xl mb-4">💬</div>
+                <CardTitle>AI Chat Support</CardTitle>
+                <CardDescription>24/7 instant help and coping strategies</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer" onClick={() => router.push('/bookings')}>
+              <CardHeader>
+                <div className="text-4xl mb-4">🔒</div>
+                <CardTitle>Book Counselor</CardTitle>
+                <CardDescription>Schedule with mental health professionals</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer" onClick={() => router.push('/resources')}>
+              <CardHeader>
+                <div className="text-4xl mb-4">📚</div>
+                <CardTitle>Wellness Resources</CardTitle>
+                <CardDescription>Videos, guides, and relaxation audio</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer" onClick={() => router.push('/forum')}>
+              <CardHeader>
+                <div className="text-4xl mb-4">👥</div>
+                <CardTitle>Peer Support Forum</CardTitle>
+                <CardDescription>Connect with other students</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer" onClick={() => router.push('/analytics')}>
+              <CardHeader>
+                <div className="text-4xl mb-4">📊</div>
+                <CardTitle>Analytics & Tracking</CardTitle>
+                <CardDescription>Monitor your wellness journey</CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer" onClick={() => router.push('/dashboard')}>
+              <CardHeader>
+                <div className="text-4xl mb-4">🏠</div>
+                <CardTitle>Dashboard</CardTitle>
+                <CardDescription>View all your information</CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 via-slate-50 to-blue-50">
