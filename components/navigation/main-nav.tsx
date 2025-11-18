@@ -51,14 +51,17 @@ export default function MainNav() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-md border-b border-gray-200">
-      <div className="container mx-auto px-4">
+    <nav className="sticky top-0 z-50 bg-white shadow-md border-b border-blue-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
-              InnerGuide
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm" style={{ fontFamily: 'Poppins' }}>
+              M
             </div>
+            <span className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent" style={{ fontFamily: 'Poppins' }}>
+              MindCare
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -71,7 +74,7 @@ export default function MainNav() {
                   className="gap-2"
                 >
                   <span>{link.icon}</span>
-                  <span>{link.label}</span>
+                  <span className="text-sm">{link.label}</span>
                 </Button>
               </Link>
             ))}

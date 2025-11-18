@@ -44,83 +44,87 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-green-50 py-8">
-      <div className="container mx-auto px-4">
+    <main className="min-h-screen bg-background py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome, {user.name}</h1>
-          <p className="text-gray-600">Your mental health support hub</p>
+          <h1 className="text-4xl font-bold text-foreground mb-2" style={{ fontFamily: 'Poppins' }}>
+            Hello, {user.name} 👋
+          </h1>
+          <p className="text-muted-foreground">Your mental health support hub</p>
         </div>
 
         <QuickAccess />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+          <Card className="bg-white border-blue-100 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">💬 AI Chat Support</CardTitle>
               <CardDescription>24/7 AI-guided coping strategies</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" asChild>
-                <Link href="/chat">Start Chat</Link>
+              <Button className="w-full bg-blue-500 hover:bg-blue-600" asChild>
+                <Link href="/chat">Open Chat</Link>
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+          <Card className="bg-white border-blue-100 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">📅 Book Counselor</CardTitle>
               <CardDescription>Schedule with professionals</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" asChild>
+              <Button className="w-full bg-blue-500 hover:bg-blue-600" asChild>
                 <Link href="/bookings">Book Now</Link>
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+          <Card className="bg-white border-blue-100 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">📚 Resources</CardTitle>
               <CardDescription>Wellness guides & content</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" asChild>
-                <Link href="/resources">Explore</Link>
+              <Button className="w-full bg-blue-500 hover:bg-blue-600" asChild>
+                <Link href="/resources">Browse Resources</Link>
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+          <Card className="bg-white border-blue-100 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">👥 Peer Forum</CardTitle>
               <CardDescription>Community support</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" asChild>
+              <Button className="w-full bg-blue-500 hover:bg-blue-600" asChild>
                 <Link href="/forum">Join Forum</Link>
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+          <Card className="bg-white border-blue-100 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">📈 Analytics</CardTitle>
-              <CardDescription>Track your progress</CardDescription>
+              <CardDescription>Track your wellness</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" asChild>
+              <Button className="w-full bg-blue-500 hover:bg-blue-600" asChild>
                 <Link href="/analytics">View Stats</Link>
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 backdrop-blur hover:shadow-lg transition-shadow">
+          <Card className="bg-white border-blue-100 hover:shadow-lg transition-shadow">
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">🔔 Notifications</CardTitle>
-              <CardDescription>Your updates</CardDescription>
+              <CardTitle className="text-lg flex items-center gap-2">💚 Wellness Tracker</CardTitle>
+              <CardDescription>Daily mood check-in</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">View All</Button>
+              <Button className="w-full bg-green-500 hover:bg-green-600" asChild>
+                <Link href="/analytics">Log Today</Link>
+              </Button>
             </CardContent>
           </Card>
         </div>
