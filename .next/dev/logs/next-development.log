@@ -1,6 +1,0 @@
-[00:00:02.918] Server  LOG      ✓ Ready in 1892ms
-[00:00:06.051] Server  LOG      ○ Compiling / ...
-[00:00:10.384] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:00:10.384] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:05:51.246] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[00:05:51.246] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.

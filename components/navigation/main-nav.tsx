@@ -96,6 +96,16 @@ export default function MainNav() {
                   <DropdownMenuItem disabled className="text-xs text-gray-500">
                     {user.email}
                   </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile" className="cursor-pointer">
+                      View Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile/edit" className="cursor-pointer">
+                      Edit Profile
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={handleLogout}>
                     Logout
                   </DropdownMenuItem>
@@ -120,6 +130,16 @@ export default function MainNav() {
                       </Link>
                     </DropdownMenuItem>
                   ))}
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile" className="cursor-pointer">
+                      View Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile/edit" className="cursor-pointer">
+                      Edit Profile
+                    </Link>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
