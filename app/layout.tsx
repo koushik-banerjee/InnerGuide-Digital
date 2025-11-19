@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Poppins } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import MainNav from '@/components/navigation/main-nav';
 
@@ -45,7 +44,6 @@ export default function RootLayout({
       <body className={`${poppins.variable} font-sans antialiased`}>
         <MainNav />
         {children}
-        <Analytics />
       </body>
     </html>
   )

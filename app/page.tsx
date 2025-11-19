@@ -4,13 +4,17 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import LoginForm from '@/components/auth/login-form';
+import SignupForm from '@/components/auth/signup-form';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [signupOpen, setSignupOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,6 +27,17 @@ export default function Home() {
     }
     setLoading(false);
   }, []);
+
+  const handleAuthSuccess = () => {
+    setLoginOpen(false);
+    setSignupOpen(false);
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
+    if (token && userData) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(userData));
+    }
+  };
 
   if (loading) {
     return (
@@ -53,7 +68,7 @@ export default function Home() {
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
                 setIsLoggedIn(false);
-                router.push('/');
+                setUser(null);
               }} variant="outline">
                 Logout
               </Button>
@@ -145,11 +160,11 @@ export default function Home() {
             </div>
 
             <div className="flex items-center gap-4">
-              <Button asChild variant="ghost">
-                <Link href="/">Login</Link>
+              <Button variant="ghost" onClick={() => setLoginOpen(true)}>
+                Login
               </Button>
-              <Button asChild>
-                <Link href="/register">Sign Up</Link>
+              <Button onClick={() => setSignupOpen(true)}>
+                Sign Up
               </Button>
             </div>
           </div>
@@ -166,16 +181,16 @@ export default function Home() {
               AI-powered support designed for college students.
             </p>
             <div className="flex gap-4">
-              <Button asChild size="lg" className="bg-blue-500 hover:bg-blue-600">
-                <Link href="/chat">Start AI Chat</Link>
+              <Button size="lg" className="bg-blue-500 hover:bg-blue-600" onClick={() => router.push('/chat')}>
+                Start AI Chat
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-blue-200">
-                <Link href="/resources">Explore Resources</Link>
+              <Button size="lg" variant="outline" className="border-blue-200" onClick={() => router.push('/resources')}>
+                Explore Resources
               </Button>
             </div>
           </div>
           <div className="bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl h-64 flex items-center justify-center text-white text-center p-8">
-            <div className="text-4xl">🤖💭 AI Mental Health Support</div>
+            <div className="text-4xl">AI Mental Health Support</div>
           </div>
         </div>
 
@@ -263,12 +278,13 @@ export default function Home() {
           </div>
 
           <Card className="border-0 shadow-2xl p-8">
-            <LoginForm />
-            <div className="mt-6 text-center text-sm text-gray-600">
-              Don't have an account?{' '}
-              <Link href="/register" className="text-blue-600 font-semibold hover:text-blue-700">
-                Create one here
-              </Link>
+            <div className="flex gap-4">
+              <Button size="lg" className="flex-1 bg-blue-500 hover:bg-blue-600" onClick={() => setLoginOpen(true)}>
+                Login
+              </Button>
+              <Button size="lg" className="flex-1" onClick={() => setSignupOpen(true)}>
+                Sign Up
+              </Button>
             </div>
           </Card>
         </div>
@@ -311,6 +327,48 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Welcome Back</DialogTitle>
+          </DialogHeader>
+          <LoginForm onSuccess={handleAuthSuccess} />
+          <div className="mt-4 text-center text-sm text-gray-600">
+            Don't have an account?{' '}
+            <button
+              onClick={() => {
+                setLoginOpen(false);
+                setSignupOpen(true);
+              }}
+              className="text-blue-600 font-semibold hover:text-blue-700"
+            >
+              Sign up here
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={signupOpen} onOpenChange={setSignupOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Create Account</DialogTitle>
+          </DialogHeader>
+          <SignupForm onSuccess={handleAuthSuccess} />
+          <div className="mt-4 text-center text-sm text-gray-600">
+            Already have an account?{' '}
+            <button
+              onClick={() => {
+                setSignupOpen(false);
+                setLoginOpen(true);
+              }}
+              className="text-blue-600 font-semibold hover:text-blue-700"
+            >
+              Log in here
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 }
